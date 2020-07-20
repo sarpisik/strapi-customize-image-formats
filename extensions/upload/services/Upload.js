@@ -7,11 +7,17 @@ module.exports = {
     const fileFormats = {};
     const {
       getDimensions,
+      generateBase64,
       generateThumbnail,
       generateResponsiveFormats,
     } = strapi.plugins.upload.services["image-manipulation"];
 
     await strapi.plugins.upload.provider.upload(fileData);
+
+    const base64 = await generateBase64(fileData);
+    if (base64) {
+      fileFormats["base64"] = [base64];
+    }
 
     const thumbnailFile = await generateThumbnail(fileData);
     if (thumbnailFile) {
