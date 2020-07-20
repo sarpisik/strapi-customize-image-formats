@@ -1,3 +1,3 @@
-# Strapi application
+# Strapi Customize Image Formats
 
-A quick description of your strapi application
+This branch is as an entry point to tutorial.
