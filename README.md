@@ -1,3 +1,3 @@
-# Strapi application
+# Strapi Customize Image Formats
 
-A quick description of your strapi application
+An implementation of how to edit strapi-plugin-upload to generate customized image formats.
