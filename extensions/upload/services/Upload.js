@@ -57,4 +57,40 @@ module.exports = {
     });
     return this.add(fileData);
   },
+  async remove(file) {
+    const config = strapi.plugins.upload.config;
+
+    // execute delete function of the provider
+    if (file.provider === config.provider) {
+      await strapi.plugins.upload.provider.delete(file);
+
+      const formats = file.formats;
+      if (formats) {
+        const promises = [];
+        const formatKeys = Object.keys(formats).filter(
+          (key) => key !== "base64"
+        );
+
+        for (const key of formatKeys) {
+          const images = formats[key];
+          const shouldSkip = !(Array.isArray(images) && images.length > 0);
+          if (shouldSkip) continue;
+
+          for (const image of images) {
+            promises.push(strapi.plugins.upload.provider.delete(image));
+          }
+        }
+
+        await Promise.all(promises);
+      }
+    }
+
+    const media = await strapi.query("file", "upload").findOne({
+      id: file.id,
+    });
+
+    strapi.eventHub.emit("media.delete", { media });
+
+    return strapi.query("file", "upload").delete({ id: file.id });
+  },
 };
