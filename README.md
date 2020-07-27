@@ -1,3 +1,3 @@
-# Strapi application
+# Strapi Customize Image Formats
 
-A quick description of your strapi application
+This branch includes final code of the tutorial published on [sarpisik.com](https://sarpisik.com/blog/how-to-generate-different-image-formats-with-strapi-plugin-upload).
