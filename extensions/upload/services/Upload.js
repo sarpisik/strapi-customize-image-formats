@@ -29,7 +29,15 @@ module.exports = {
     const formats = await generateResponsiveFormats(fileData);
     if (Array.isArray(formats) && formats.length > 0) {
       for (const format of formats) {
-        if (!format || !(Array.isArray(format) && format.length > 0)) continue;
+        if (
+          !format ||
+          !(
+            Array.isArray(format) &&
+            format.length > 0 &&
+            format[0] !== undefined
+          )
+        )
+          continue;
         for (const { key, file } of format) {
           await strapi.plugins.upload.provider.upload(file);
           delete file.buffer;
